@@ -1,0 +1,30 @@
+{
+  "name": "letsmeet",
+  "version": "0.1.0",
+  "description": "Find the day everyone's free: a privacy-first group scheduler with Google Calendar free/busy.",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "build:mock": "vite build --mode mock",
+    "dev": "vite build --mode mock && wrangler dev",
+    "deploy": "vite build && wrangler deploy",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p worker/tsconfig.json",
+    "hooks": "git config core.hooksPath .githooks"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20261007.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.3",
+    "vitest": "5.0.3",
+    "wrangler": "4.148.0"
+  },
+  "overrides": {
+    "sharp": "0.35.5"
+  }
+}

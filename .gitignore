@@ -1,0 +1,16 @@
+# Nothing personal or local lives in this repo. .env is yours; build output and local test data are regenerated.
+.env
+.env.local
+# these two hold no secrets and are needed to run the project
+!.env.example
+!.env.mock
+.dev.vars
+.wrangler/
+dist/
+node_modules/
+private/
+*.key
+*.pem
+*.p12
+client_secret*.json
+.DS_Store

@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "letsmeet",
+  "main": "worker/src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    // the Worker sees every request so it can add security headers to all of them
+    "run_worker_first": true
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "POLLS", "class_name": "Poll" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Poll"] }],
+  "ratelimits": [
+    { "name": "WRITE_LIMITER", "namespace_id": "1001", "simple": { "limit": 30, "period": 60 } }
+  ],
+  // no request logs: nothing about visitors is kept
+  "observability": { "enabled": false },
+  "vars": {
+    // seconds until an undecided plan deletes itself (7 days)
+    "POLL_TTL_SECONDS": "604800"
+  }
+}
