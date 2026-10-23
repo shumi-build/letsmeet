@@ -32,7 +32,6 @@ export const S = {
     time: { days: [firstFri, addDays(firstFri, 1), addDays(firstFri, 7), addDays(firstFri, 8)], from: 1080, to: 1380 } as TimeSpec,
     cal: { trip: addDays(today, 14).slice(0, 7), time: today.slice(0, 7) } as Record<Mode, string>,
     rangePick: null as string | null,
-    lastNights: 2,
     saving: false,
   },
 

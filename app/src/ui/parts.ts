@@ -17,7 +17,7 @@ export const stepper = (act: string, val: number, min: number, max: number) =>
 
 export const nightsVal = (n: number) => {
   const t = T();
-  return n === 0 ? `<span class="nval">${t.dayTrip}</span>` : `<span class="nval">${n} ${t.nightsN(n)}<small>${t.daysN(n + 1)}</small></span>`;
+  return `<span class="nval">${t.nightsCount(n)}<small>${t.daysN(n + 1)}</small></span>`;
 };
 
 export const coverOverlay = (cap: string, title: string, sub: string) =>

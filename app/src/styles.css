@@ -373,3 +373,13 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em}
 .tg-clip::after{right:0;background:linear-gradient(to left,var(--card),transparent)}
 .more-l .tg-clip::before,.more-r .tg-clip::after{opacity:1}
 @media (prefers-reduced-motion:reduce){.tg-clip::before,.tg-clip::after{transition:none}}
+
+/* Japanese: the same type as r-agent.com — Hiragino Kaku Gothic ProN, which ships with iPhone and Mac
+   (Meiryo on Windows, Noto Sans JP on Android). Nothing is downloaded. The tight tracking used for SF Pro
+   squeezes kana and kanji together, so Japanese gets normal letter spacing and a little more line height. */
+html:lang(ja){--f:"Hiragino Kaku Gothic ProN","Hiragino Sans","Hiragino Kaku Gothic Pro",Meiryo,"Noto Sans JP",sans-serif}
+html:lang(ja) body,html:lang(ja) body *{letter-spacing:0}
+html:lang(ja) body{line-height:1.5}
+html:lang(ja) .foot{line-height:20px}
+html:lang(ja) .priv div{line-height:20px}
+.sub b{color:var(--label);font-weight:600}

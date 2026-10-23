@@ -45,10 +45,9 @@ export function vCreate(): string {
 }
 
 function howLong() {
-  const t = T(), n = C().trip.nights, day = n === 0;
+  const t = T(), n = C().trip.nights;
   return `<section class="sec"><h2 class="title3">${t.howLong}</h2>
-    <div class="segc" role="group"><button class="${day ? 'on' : ''}" data-act="triptype" data-v="day" aria-pressed="${day}">${t.dayTrip}</button><button class="${!day ? 'on' : ''}" data-act="triptype" data-v="night" aria-pressed="${!day}">${t.overnight}</button></div>
-    ${day ? '' : `<div class="list"><div class="ri"><span class="k">${t.nightsRow}</span>${nightsVal(n)}${stepper('nightstep', n, 1, MAX_NIGHTS)}</div></div>`}
+    <div class="list"><div class="ri"><span class="k">${t.nightsRow}</span>${nightsVal(n)}${stepper('nightstep', n, 0, MAX_NIGHTS)}</div></div>
   </section>`;
 }
 
@@ -82,6 +81,7 @@ export function rangeClasses(k: string) {
 function tripCalendar() {
   const t = T(), c = C(), tr = c.trip, len = diffDays(tr.start, tr.end) + 1, combos = Math.max(0, len - tr.nights);
   return `<section class="sec"><h2 class="title3">${t.periodQ}</h2>
+    <p class="sub pi">${t.searchHint(esc(t.nights(tr.nights)))}</p>
     <div class="list pad">${calendarShell(c.cal.trip)}</div>
     <p class="foot pi">${c.rangePick ? t.tapEnd : t.tapRange} ${t.tripHint(t.nights(tr.nights), combos, len)}</p>
   </section>`;
@@ -187,12 +187,7 @@ export function tapRange(k: string) {
 
 export const createActions: Record<string, (v: string, el: HTMLElement) => void> = {
   mode(v) { const c = C(); if (c.mode !== v) { c.mode = v as Mode; c.rangePick = null; render(); } },
-  triptype(v) {
-    const c = C(), tr = c.trip;
-    if (v === 'day') { if (tr.nights > 0) c.lastNights = tr.nights; tr.nights = 0; } else if (tr.nights === 0) tr.nights = c.lastNights || 2;
-    fitRange(); render();
-  },
-  nightstep(v) { const c = C(); c.trip.nights = Math.min(MAX_NIGHTS, Math.max(1, c.trip.nights + Number(v))); c.lastNights = c.trip.nights; fitRange(); render(); },
+  nightstep(v) { const c = C(); c.trip.nights = Math.min(MAX_NIGHTS, Math.max(0, c.trip.nights + Number(v))); fitRange(); render(); },
   cal(v) { const c = C(); const [y, m] = c.cal[c.mode].split('-').map(Number); const d = new Date(y, m - 1 + Number(v), 1); c.cal[c.mode] = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; render(); },
   timesheet() { const tm = C().time; openTimeSheet(tm.from, tm.to, (f, to) => { tm.from = f; tm.to = to; render(); }); },
   create() { void createPlan(); },
