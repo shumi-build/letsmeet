@@ -6,12 +6,12 @@ import { esc } from '../ui/dom';
 const CONTACT: string = import.meta.env.VITE_CONTACT_EMAIL || '';
 
 const page = (h: string, lead: string, extra = '') => `
-  <header class="hdr"><div><div class="cap">Let's Meet</div></div>${langBtn()}</header>
+  <header class="hdr"><div><a class="cap" href="/" data-link>Let's Meet</a></div>${langBtn()}</header>
   <div class="page-msg"><h1 class="large">${h}</h1><p class="sub">${lead}</p>${extra}</div>${footer()}`;
 
 export const vLoading = () => `<div class="loading"><span class="spin"></span></div>`;
-export const vNotFound = () => page(T().notFoundH, T().notFoundLead, `<a class="cta" href="/" data-link>${T().makeNew}</a>`);
-export const vBadLink = () => page(T().badLinkH, T().badLinkLead, `<a class="cta" href="/" data-link>${T().makeNew}</a>`);
+export const vNotFound = () => page(T().notFoundH, T().notFoundLead, `<a class="cta" href="/new" data-link>${T().makeNew}</a>`);
+export const vBadLink = () => page(T().badLinkH, T().badLinkLead, `<a class="cta" href="/new" data-link>${T().makeNew}</a>`);
 export const vError = () => page(T().loadFailed, '', `<button class="cta" data-act="retry">${T().retry}</button>`);
 
 /** Plain-language privacy page (also the page Google's OAuth review asks for). */

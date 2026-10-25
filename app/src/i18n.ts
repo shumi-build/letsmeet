@@ -89,6 +89,28 @@ const en = {
   weekendsOnly: 'Weekends & holidays only', dayDragHint: 'Tap a day to change it, or swipe sideways across days to change several.',
   seeAll: (n: number) => `See all (${n})`, showLess: 'Show less',
   heatAll: 'All', heatNone: 'None', heatShort: (a: number, b: number) => (a === b ? `−${a}` : `−${a}–${b}`), heatMore: (a: number) => `−${a}+`,
+
+  // home page
+  homeH1: 'Find the day everyone’s free.',
+  homeLead: 'Send one link to your group. Friends connect Google Calendar or tap in their days, and Let’s Meet shows when everyone overlaps: dinner this week, or a three-night trip.',
+  makePlan: 'Make a plan', homeFine: 'Free · No account needed · Open source',
+  howTitle: 'How it works',
+  howSteps: [
+    ['Pick your dates', 'An evening window for dinner, or a date range and how many nights for a trip.'],
+    ['Send one link', 'Share it in LINE or any group chat. Friends connect Google Calendar or fill in their days by hand.'],
+    ['See the overlap', 'The best options rise to the top. Pick one, and everyone adds it to their calendar in one tap.'],
+  ] as [string, string][],
+  privTitle: 'Your calendar stays private', privLead: 'Let’s Meet is built so there’s nothing worth stealing.',
+  privItems: [
+    ['Only when you’re busy', 'With your permission it reads just your busy times (Google’s calendar.freebusy access). Never event titles, places, guests, Gmail or your email address.'],
+    ['Read on your phone', 'Your calendar is read on your own device and the access is removed right away. Nothing from Google reaches our server.'],
+    ['Locked with your link', 'Answers are encrypted before they leave the phone. The key is part of the link, so our server can’t read them.'],
+    ['Gone after 7 days', 'Plans delete themselves a week after they’re made. Once a date is picked, everyone’s availability is deleted at once.'],
+  ] as [string, string][],
+  privLink: 'Read the privacy policy',
+  ghTitle: 'Open source on GitHub', ghSub: 'Read every line, or run your own copy.',
+  finalH: 'Ready when your group is.',
+  demo: { trip: 'Winter onsen trip', tripCap: '2 nights, 3 days', tripSub: 'Dec 29 – 31', dinner: 'Catch-up dinner', dinnerCap: 'Fri 7:00 PM', dinnerSub: '4 of 4 free', mahjong: 'Mahjong night', mahjongCap: 'Sat 6:00 PM', mahjongSub: '3 of 4 free' },
 };
 
 type Dict = typeof en;
@@ -179,6 +201,27 @@ const ja: Dict = {
   weekendsOnly: '土日祝だけ行ける', dayDragHint: 'タップで切り替え。横になぞると、まとめて変えられます。',
   seeAll: n => `すべて見る（${n}）`, showLess: '閉じる',
   heatAll: '全員', heatNone: '0人', heatShort: (a, b) => (a === b ? `${a}人欠け` : `${a}〜${b}人欠け`), heatMore: a => `${a}人以上欠け`,
+
+  homeH1: 'みんなが空いてる日、すぐ見つかる。',
+  homeLead: 'グループにリンクを1つ送るだけ。友達がGoogleカレンダーをつなぐか、行ける日をタップすると、全員の空きが重なる日がわかります。今週のごはんも、2泊3日の旅行も。',
+  makePlan: '予定を作る', homeFine: '無料・登録不要・オープンソース',
+  howTitle: '使い方',
+  howSteps: [
+    ['候補を決める', 'ごはんなら時間帯、旅行なら期間と泊数を選びます。'],
+    ['リンクを1つ送る', 'LINEなどのグループに送るだけ。友達はGoogleカレンダーをつなぐか、手で入力します。'],
+    ['重なる日がわかる', 'いちばん集まれる日程が上に並びます。決めたら、ワンタップでみんなのカレンダーへ。'],
+  ],
+  privTitle: 'カレンダーの中身は見ません', privLead: '盗まれて困るデータを、そもそも持たない作りです。',
+  privItems: [
+    ['見るのは「予定がある時間」だけ', '許可をもらって、予定が入っている時間帯だけを読みます（Googleの calendar.freebusy 権限）。予定のタイトル・場所・参加者、Gmail、メールアドレスは見ません。'],
+    ['読み取りはあなたのスマホの中', 'カレンダーはあなたの端末の中で読み取り、終わったらすぐ権限を外します。Googleのデータが当社のサーバーに届くことはありません。'],
+    ['回答はリンクの鍵で暗号化', 'みんなの回答は、スマホから送る前に暗号化されます。鍵はリンクの中にあるので、当社のサーバーでは読めません。'],
+    ['7日で自動的に消える', '予定は作成から7日で自動的に削除されます。日程が決まったら、全員の空き状況はその場で削除されます。'],
+  ],
+  privLink: 'プライバシーポリシーを読む',
+  ghTitle: 'GitHubでオープンソース公開中', ghSub: 'すべてのコードを確認したり、自分で動かしたりできます。',
+  finalH: 'さっそく予定を立てよう。',
+  demo: { trip: '冬の温泉旅行', tripCap: '2泊3日', tripSub: '12/29〜12/31', dinner: '久しぶりにごはん', dinnerCap: '金 19:00〜', dinnerSub: '4人中4人OK', mahjong: '麻雀ナイト', mahjongCap: '土 18:00〜', mahjongSub: '4人中3人OK' },
 };
 
 export const DICT: Record<Lang, Dict> = { en, ja };

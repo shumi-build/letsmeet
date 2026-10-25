@@ -30,7 +30,7 @@ const shownTitle = () => C().title[C().mode].trim() || T().untitled;
 export function vCreate(): string {
   const t = T(), c = C(), trip = c.mode === 'trip';
   return `
-  <header class="hdr"><div><div class="cap">Let's Meet</div><h1 class="large">${t.newPlan}</h1></div>${langBtn()}</header>
+  <header class="hdr"><div><a class="cap" href="/" data-link>Let's Meet</a><h1 class="large">${t.newPlan}</h1></div>${langBtn()}</header>
   <div class="sec">
     <div class="segc" role="group"><button class="${!trip ? 'on' : ''}" data-act="mode" data-v="time" aria-pressed="${!trip}">${t.kindTime}</button><button class="${trip ? 'on' : ''}" data-act="mode" data-v="trip" aria-pressed="${trip}">${t.kindTrip}</button></div>
     <p class="foot pi">${trip ? t.kindTripSub : t.kindTimeSub}</p>

@@ -383,3 +383,56 @@ html:lang(ja) body{line-height:1.5}
 html:lang(ja) .foot{line-height:20px}
 html:lang(ja) .priv div{line-height:20px}
 .sub b{color:var(--label);font-weight:600}
+
+/* ---- home page ---- */
+.home-top{display:flex;align-items:center;justify-content:space-between;padding-top:10px}
+.home-brand{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:17px;color:var(--label);text-decoration:none}
+.home-brand svg{width:26px;height:26px;color:var(--tint)}
+.home-hero{display:flex;flex-direction:column;gap:16px}
+.home-h1 .nb{display:inline-block}
+.home-h1{font-size:36px;line-height:42px;font-weight:800;letter-spacing:-.8px;text-wrap:balance}
+.home-lead{font-size:17px;line-height:25px;color:var(--label-2)}
+html:lang(ja) .home-h1{font-size:30px;line-height:42px}
+html:lang(ja) .home-lead{font-size:16px;line-height:27px}
+.home-hero .cta{margin-top:4px}
+.home-final{display:flex;flex-direction:column;gap:14px;align-items:stretch;text-align:center;padding-block:8px}
+
+/* floating example plans, drawn with the same cover art as real plans */
+.float-stack{position:relative;height:352px;margin-top:4px}
+.fcard{position:absolute;width:68%;max-width:290px;aspect-ratio:3/2;border-radius:22px;overflow:hidden;background:var(--card);
+  box-shadow:0 18px 40px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.08);animation:float 6s ease-in-out infinite}
+.fcard canvas{width:100%;height:100%;display:block}
+.fcard .ttl{left:16px;right:16px;bottom:14px}
+.fcard .title2{font-size:19px;line-height:24px}
+.fcard .tsub{font-size:13px}
+.fstack{position:absolute;top:12px;right:12px}
+.fstack .av{width:24px;height:24px;font-size:11px;box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+.fstack .av+.av{margin-left:-7px}
+.fstack .av i{width:9px;height:9px;box-shadow:0 0 0 1.5px #fff}
+/* cascade down the screen; each card sits in front of the one below it, so every title (bottom-left) stays visible */
+.f1{left:0;top:0;--r:-5deg;transform:rotate(var(--r));z-index:3}
+.f2{right:0;top:94px;--r:4deg;transform:rotate(var(--r));animation-delay:-2s;z-index:2}
+.f3{left:3%;top:180px;--r:-2deg;transform:rotate(var(--r));animation-delay:-4s;z-index:1}
+@keyframes float{0%,100%{transform:translateY(0) rotate(var(--r))}50%{transform:translateY(-8px) rotate(var(--r))}}
+@media (prefers-reduced-motion:reduce){.fcard{animation:none}}
+
+/* how it works */
+.how{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.how li{display:flex;gap:14px;align-items:flex-start}
+.how-n{width:30px;height:30px;border-radius:50%;background:var(--tint);color:var(--on-tint);display:grid;place-items:center;font-weight:700;font-size:15px;flex:none}
+.how b{font-size:17px;font-weight:600}
+.how p,.privlist p{margin-top:2px;font-size:15px;line-height:21px;color:var(--label-2)}
+html:lang(ja) .how p,html:lang(ja) .privlist p{line-height:23px}
+
+/* privacy list + GitHub row */
+.privlist .ri{align-items:flex-start;padding-block:14px}
+.privlist b{font-size:16px;font-weight:600}
+.ico-c{width:30px;height:30px;border-radius:8px;background:var(--green);color:#fff;display:grid;place-items:center;flex:none}
+.ico-c svg{width:17px;height:17px}
+a.gh{display:flex;text-decoration:none;color:var(--label);min-height:64px}
+.gh .k{display:flex;flex-direction:column}
+.gh .k b{font-size:16px;font-weight:600}
+.gh .k span{font-size:13px;color:var(--label-2)}
+.gh-ico{width:36px;height:36px;border-radius:50%;background:var(--tint);color:var(--on-tint);display:grid;place-items:center;flex:none}
+.gh-ico svg{width:20px;height:20px}
+a.tlink{text-decoration:none}

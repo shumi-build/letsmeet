@@ -7,12 +7,13 @@ import { closeMenu, menuOpen, scrolledAway } from './ui/menu';
 import { afterCreate, createActions, fillCalendar, fitRange, flipMonth, pickCover, refreshCoverText, tapRange, togglePick, vCreate } from './screens/create';
 import { afterEvent, eventActions, nextDayState, openPoll, setDay, updatePaintCount, vDecided, vRespond, vResults, vShare } from './screens/event';
 import { vBadLink, vError, vLoading, vNotFound, vPrivacy } from './screens/misc';
+import { afterHome, vHome } from './screens/home';
 import { isPlanKey } from './lib/crypto';
 import { store } from './lib/store';
 
 /* ---------- render ---------- */
 const VIEWS = {
-  loading: vLoading, create: vCreate, share: vShare, respond: vRespond, results: vResults, decided: vDecided,
+  loading: vLoading, home: vHome, create: vCreate, share: vShare, respond: vRespond, results: vResults, decided: vDecided,
   notfound: vNotFound, badlink: vBadLink, error: vError, privacy: vPrivacy,
 } as const;
 
@@ -21,7 +22,7 @@ onRender(() => {
   const planTitle = S.view !== 'create' && S.view !== 'privacy' && S.poll ? S.poll.meta.title : '';
   document.title = planTitle ? `${planTitle} · Let's Meet` : "Let's Meet";
   $('#app')!.innerHTML = VIEWS[S.view]();
-  if (S.view === 'create') afterCreate(); else afterEvent();
+  if (S.view === 'create') afterCreate(); else if (S.view === 'home') afterHome(); else afterEvent();
 });
 
 /* ---------- routing ---------- */
@@ -33,8 +34,9 @@ function route() {
     void openPoll(m[1], isPlanKey(key) ? key : '', history.state?.view);
     return;
   }
-  S.view = path === '/privacy' ? 'privacy' : 'create';
-  if (path !== '/' && path !== '/privacy') history.replaceState(null, '', '/');
+  // "/" is the home page, "/new" the form for a new plan; anything unknown goes home
+  S.view = path === '/privacy' ? 'privacy' : path === '/new' ? 'create' : 'home';
+  if (!['/', '/new', '/privacy'].includes(path)) history.replaceState(null, '', '/');
   render();
   window.scrollTo(0, 0);
 }
@@ -93,7 +95,7 @@ document.addEventListener('input', e => {
 });
 
 let rz: number | undefined;
-window.addEventListener('resize', () => { clearTimeout(rz); rz = window.setTimeout(() => { if (S.view === 'create') afterCreate(); else afterEvent(); }, 150); });
+window.addEventListener('resize', () => { clearTimeout(rz); rz = window.setTimeout(() => { if (S.view === 'create') afterCreate(); else if (S.view === 'home') afterHome(); else afterEvent(); }, 150); });
 
 /* ---------- drag across calendar days (create screen) ---------- */
 type CalDrag = { type: 'pick'; on: boolean; last: string } | { type: 'range'; anchor: string; last: string; moved: boolean; pending: string | null };

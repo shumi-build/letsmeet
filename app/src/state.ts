@@ -4,7 +4,7 @@ import type { Block, DayStatus, Member, TimeSpec, TripSpec } from './lib/schedul
 import { addDays, localTimeZone, todayIn } from './lib/dates';
 import { store } from './lib/store';
 
-export type View = 'loading' | 'create' | 'share' | 'respond' | 'results' | 'decided' | 'notfound' | 'badlink' | 'error' | 'privacy';
+export type View = 'loading' | 'home' | 'create' | 'share' | 'respond' | 'results' | 'decided' | 'notfound' | 'badlink' | 'error' | 'privacy';
 export type Mode = 'trip' | 'time';
 
 const tz = localTimeZone();
