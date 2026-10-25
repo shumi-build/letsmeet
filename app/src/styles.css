@@ -467,3 +467,5 @@ a.tlink{text-decoration:none}
 .tile b{font-size:15px;font-weight:600;line-height:20px}
 .tile span:last-child{font-size:13px;line-height:18px;color:var(--label-2)}
 html:lang(ja) .tile span:last-child{line-height:20px}
+/* icons placed directly in a capsule button (e.g. Copy on the message sheet) */
+.cta > svg{width:20px;height:20px;flex:none}
