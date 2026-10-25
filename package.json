@@ -9,7 +9,7 @@
     "build": "vite build",
     "build:mock": "vite build --mode mock",
     "dev": "vite build --mode mock && wrangler dev",
-    "deploy": "vite build && wrangler deploy",
+    "deploy": "vite build && node scripts/deploy.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p worker/tsconfig.json",
     "hooks": "git config core.hooksPath .githooks"

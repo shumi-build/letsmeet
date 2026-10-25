@@ -212,7 +212,7 @@ npm run deploy
 
 1. Cloudflare ダッシュボードの左メニュー「**Domain Registration**（ドメインの登録）」→「**Register Domains**」
 2. 欲しい名前を検索して購入する（`.com` で年1,500〜2,000円ほど。原価販売なので他社より安いことが多いです）
-3. 「**Workers & Pages**」→ `letsmeet` →「**設定**（Settings）」→「**ドメインとルート**（Domains & Routes）」→「**追加**」→「**カスタムドメイン**」→ 買ったドメイン（例：`letsmeet.app`）を入れる
+3. `.env` の `DEPLOY_DOMAIN=` に買ったドメインを書いて、`npm run deploy` をもう一度実行する（サイトがそのドメインにつながります）
 4. 数分後に `https://買ったドメイン` で開ければ完了です
 
 ### 5-2. Google 側をドメインに合わせる

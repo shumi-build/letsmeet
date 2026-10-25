@@ -3,6 +3,10 @@
   "name": "letsmeet",
   "main": "worker/src/index.ts",
   "compatibility_date": "2026-10-01",
+  // keep the free *.workers.dev address working even when a custom domain is attached (old links keep working)
+  "workers_dev": true,
+  // no per-version preview addresses: old versions of the site should not stay reachable
+  "preview_urls": false,
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",

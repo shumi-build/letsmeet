@@ -51,7 +51,7 @@ You need a Google account (for Google Cloud) and a Cloudflare account. Both are 
    - Data access: add **only** `https://www.googleapis.com/auth/calendar.freebusy`.
    - Clients: create an OAuth client of type **Web application**. Add your site address (and `http://localhost:8787` for local testing) under *Authorized JavaScript origins*. No redirect URIs. The client secret is not used; don't store it anywhere.
 3. **Configure and redeploy:** `cp .env.example .env`, put the client ID in `VITE_GOOGLE_CLIENT_ID` (and a contact address in `VITE_CONTACT_EMAIL`), then `npm run deploy` again. The client ID is built into the page, so redeploy whenever it changes.
-4. **Going public:** to let anyone use it beyond your test users, attach your own domain, fill in Branding (home page and `/privacy`), verify the domain, and submit the app for Google's verification. Replace the simplified Google Calendar mark (`GCAL` in `app/src/ui/dom.ts`) with Google's official asset first.
+4. **Going public:** to let anyone use it beyond your test users, put your own domain (bought on or moved to Cloudflare) in `DEPLOY_DOMAIN` and redeploy, add it to the OAuth client's JavaScript origins, fill in Branding (home page and `/privacy`), verify the domain, and submit the app for Google's verification. Replace the simplified Google Calendar mark (`GCAL` in `app/src/ui/dom.ts`) with Google's official asset first.
 
 ### Configuration
 
@@ -59,6 +59,7 @@ You need a Google account (for Google Cloud) and a Cloudflare account. Both are 
 |---|---|---|
 | `.env` | `VITE_GOOGLE_CLIENT_ID` | Your OAuth client ID. Empty = people fill in their days by hand. |
 | `.env` | `VITE_CONTACT_EMAIL` | Contact address shown on `/privacy`. |
+| `.env` | `DEPLOY_DOMAIN` | Your own domain on Cloudflare; `npm run deploy` attaches the site to it. Kept out of `wrangler.jsonc` so the repo stays generic. |
 | `wrangler.jsonc` | `POLL_TTL_SECONDS` | How long an undecided plan lives (default 7 days). |
 | `wrangler.jsonc` | `ratelimits` | Write requests allowed per visitor per minute (default 30). |
 
