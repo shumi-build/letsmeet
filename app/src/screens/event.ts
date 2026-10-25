@@ -24,8 +24,13 @@ interface Box { n: string; s: 'google' | 'manual'; d: string }
 
 const meta = () => S.poll!.meta;
 const ctx = (rid: string) => `${S.id}:${rid}`;
-const shareUrl = () => `${location.origin}/e/${S.id}#${S.key}`;
-const plainUrl = () => `${location.origin}/e/${S.id}`;
+// `openExternalBrowser=1` is LINE's documented switch: a link with it opens in the phone's own browser
+// (Safari / Chrome), where the person's usual Google account is signed in, instead of LINE's built-in one.
+const OPEN_OUT = '?openExternalBrowser=1';
+const shareUrl = () => `${location.origin}/e/${S.id}${OPEN_OUT}#${S.key}`;
+const shownUrl = () => `${location.host}/e/${S.id}`;
+const plainUrl = () => `${location.origin}/e/${S.id}${OPEN_OUT}`;
+const inLineApp = () => /\bLine\//i.test(navigator.userAgent);
 const title = () => meta().title || T().untitled;
 let pendingDecision: { d: Decision; label: string } | null = null;
 
@@ -92,9 +97,9 @@ function evSub(): string {
 }
 function coverSub(m: PollMeta): string {
   const t = T();
-  if (m.mode === 'trip' && m.trip) return fmtR(t.dateShort(m.trip.start), t.dateShort(m.trip.end));
-  const ds = [...(m.time?.days || [])].sort();
-  return ds.length ? `${t.candDays(ds.length)} · ${fmtR(t.dateShort(ds[0]), t.dateShort(ds[ds.length - 1]))}` : '';
+  if (m.mode === 'trip' && m.trip) return `${t.nights(m.trip.nights)} · ${fmtR(t.dateShort(m.trip.start), t.dateShort(m.trip.end))}`;
+  const ds = [...(m.time?.days || [])].sort(), tm = m.time ? fmtR(fmtT(m.time.from), fmtT(m.time.to)) : '';
+  return ds.length ? `${tm} · ${t.candDays(ds.length)} · ${fmtR(t.dateShort(ds[0]), t.dateShort(ds[ds.length - 1]))}` : tm;
 }
 const coverName = () => (isCover(meta().cover) ? meta().cover : 'mountain');
 const expiryNote = () => `<div class="expiry">${ICON.timer}<span>${T().deletesOn(expiryDate(S.poll!.expiresAt))}</span></div>`;
@@ -121,8 +126,7 @@ export function vShare(): string {
     <span>${ICON.people}${t.answered(S.members.length)}</span>
   </div>
   <section class="sec"><h2 class="title3">${t.inviteH}</h2>
-    <div class="list url"><code id="share-url">${esc(shareUrl())}</code><button class="btn2" data-act="copy">${t.copy}</button></div>
-    <div class="btn-row"><a class="btn2" href="${esc(lineUrl(shareUrl()))}" target="_blank" rel="noopener noreferrer">${ICON.bubble}${t.sendLine}</a><button class="btn2" data-act="share">${ICON.share}${t.shareOther}</button></div>
+    ${inviteControls()}
     <p class="foot pi">${t.shareNote}</p>
     ${expiryNote()}
     ${S.members.length ? `<button class="tlink center" data-act="go" data-v="results">${t.seeResults}</button>` : ''}
@@ -130,6 +134,13 @@ export function vShare(): string {
   ${S.mine ? ctaBar('go', t.seeResults, { v: 'results' }) : ctaBar('go', t.tryRespond, { v: 'respond' })}`;
 }
 const lineUrl = (text: string) => `https://line.me/R/share?text=${encodeURIComponent(text)}`;
+
+/** The invite link with Copy, LINE and Share. */
+function inviteControls() {
+  const t = T();
+  return `<div class="list url"><code id="share-url">${esc(shownUrl())}</code><button class="btn2" data-act="copy">${t.copy}</button></div>
+    <div class="btn-row"><a class="btn2" href="${esc(lineUrl(shareUrl()))}" target="_blank" rel="noopener noreferrer">${ICON.bubble}${t.sendLine}</a><button class="btn2" data-act="share">${ICON.share}${t.shareOther}</button></div>`;
+}
 
 /* ---------- respond ---------- */
 export function vRespond(): string {
@@ -272,19 +283,20 @@ export function vResults(): string {
 
 function heroCard(cap: string, ttl: string, sub: string, ok: number, total: number, per: { m: Member; w: DayStatus }[], btn: string, i: number) {
   const t = T();
-  return `<div class="hero">
+  return `<div class="hero hero-cover"><canvas class="paint-cover" data-design="${coverName()}" aria-hidden="true"></canvas><span class="hero-scrim"></span>
+    <div class="hero-body">
     <div><div class="cap">${esc(cap)}</div><div class="title2 num">${esc(ttl)}</div><div class="foot hero-sub">${esc(sub)}</div></div>
     <div class="sc"><div class="stack">${per.map(({ m, w }) => av(m, w)).join('')}</div>
       <div class="tr">${ok === total ? `<span class="tag">${ICON.check}${t.allOk}</span>` : `<div class="big">${ok}<small>${esc(t.of(total))}</small></div>`}</div></div>
     <div class="who">${per.map(({ m, w }) => `<span><i class="dot ${w}"></i>${esc(memberName(m))}</span>`).join('')}</div>
     ${S.admin ? `<button class="pick" data-act="decide" data-v="${i}">${esc(btn)}</button>` : `<p class="foot hero-sub">${t.organizerPicks}</p>`}
-  </div>`;
+  </div></div>`;
 }
 
 let lastPick: Decision[] = [];
 
 /** Small blue link right under the top card, back to the invite link (organizer only). */
-const inviteLink = () => (S.admin ? `<button class="tlink invite-link" data-act="go" data-v="share">${ICON.link}${T().inviteMore}</button>` : '');
+const inviteLink = () => `<section class="sec"><h2 class="title3">${T().inviteH}</h2>${inviteControls()}</section>`;
 const SHOWN_OPTIONS = 3;
 
 /** "Other options", three at first; See all opens the rest. */
@@ -408,6 +420,12 @@ export const eventActions: Record<string, (v: string, el: HTMLElement) => void> 
   share() { void nativeShare({ title: title(), url: shareUrl() }); },
   connect() {
     const t = T();
+    if (inLineApp()) {
+      sheet(`<div><h3 class="title2">${t.lineTitle}</h3><p class="sub mt6">${t.lineLead}</p></div>
+        <a class="cta" href="${esc(location.origin + location.pathname + OPEN_OUT + location.hash)}">${t.lineOpen}</a>
+        <p class="foot pi tc">${t.lineHint}</p><button class="tlink center" data-act="closesheet">${t.cancel}</button>`);
+      return;
+    }
     sheet(`<div><h3 class="title2">${t.sheetConnH}</h3><p class="sub mt6">${t.sheetConnLead}</p></div>
       <div class="sec"><div class="foot pi">${t.reads}</div>
         <div class="list"><div class="ri"><span class="ok">${ICON.check}</span><span class="k">${t.readsBusy}</span></div></div></div>

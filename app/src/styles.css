@@ -354,9 +354,6 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em}
 /* toast with an action (Undo) */
 .toast-btn{border:0;background:none;color:var(--link);font-weight:600;font-size:15px;padding:2px 0;white-space:nowrap}
 
-/* "Invite link" tucked right under the results card */
-.invite-link{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;font-size:14px;font-weight:500;padding:4px;margin-top:-14px}
-.invite-link svg{width:16px;height:16px}
 
 /* time grid: which days are visible, ‹ › paging, and fades on the hidden side */
 .tg-frame{display:flex;flex-direction:column;gap:10px}
@@ -421,14 +418,10 @@ html:lang(ja) .home-lead{font-size:16px;line-height:27px}
 .how li{display:flex;gap:14px;align-items:flex-start}
 .how-n{width:30px;height:30px;border-radius:50%;background:var(--tint);color:var(--on-tint);display:grid;place-items:center;font-weight:700;font-size:15px;flex:none}
 .how b{font-size:17px;font-weight:600}
-.how p,.privlist p{margin-top:2px;font-size:15px;line-height:21px;color:var(--label-2)}
-html:lang(ja) .how p,html:lang(ja) .privlist p{line-height:23px}
+.how p{margin-top:2px;font-size:15px;line-height:21px;color:var(--label-2)}
+html:lang(ja) .how p{line-height:23px}
 
 /* privacy list + GitHub row */
-.privlist .ri{align-items:flex-start;padding-block:14px}
-.privlist b{font-size:16px;font-weight:600}
-.ico-c{width:30px;height:30px;border-radius:8px;background:var(--green);color:#fff;display:grid;place-items:center;flex:none}
-.ico-c svg{width:17px;height:17px}
 a.gh{display:flex;text-decoration:none;color:var(--label);min-height:64px}
 .gh .k{display:flex;flex-direction:column}
 .gh .k b{font-size:16px;font-weight:600}
@@ -436,3 +429,41 @@ a.gh{display:flex;text-decoration:none;color:var(--label);min-height:64px}
 .gh-ico{width:36px;height:36px;border-radius:50%;background:var(--tint);color:var(--on-tint);display:grid;place-items:center;flex:none}
 .gh-ico svg{width:20px;height:20px}
 a.tlink{text-decoration:none}
+
+/* results card drawn on the plan's own cover art */
+.hero-cover{position:relative;overflow:hidden;background:#1C1C1E;color:#fff;padding:0}
+.hero-cover canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero-scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.28),rgba(0,0,0,.55) 45%,rgba(0,0,0,.72))}
+.hero-body{position:relative;display:flex;flex-direction:column;gap:16px;padding:20px;text-shadow:0 1px 10px rgba(0,0,0,.25)}
+.hero-cover .pick{background:#fff;color:#000}
+.hero-cover .stack .av{box-shadow:0 0 0 2px rgba(255,255,255,.9)}
+.hero-cover .av i{box-shadow:0 0 0 2px #fff}
+.hero-cover .hero-sub,.hero-cover .cap{color:rgba(255,255,255,.85);opacity:1}
+
+/* home: privacy, shown rather than told */
+.trust-head{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.trust-badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--green);background:color-mix(in srgb,var(--green) 13%,transparent);border-radius:999px;padding:5px 11px 5px 8px}
+.trust-badge svg{width:15px;height:15px}
+.see{display:grid;grid-template-columns:1fr 26px 1fr;align-items:center;gap:6px;background:var(--card);border-radius:22px;padding:16px 14px}
+.see-col{display:flex;flex-direction:column;gap:7px;min-width:0}
+.see-h{font-size:12px;font-weight:600;color:var(--label-2);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev{display:flex;flex-direction:column;gap:1px;border-radius:10px;padding:7px 10px;min-height:46px;justify-content:center;background:var(--bg)}
+.ev span{font-size:11px;color:var(--label-2);font-variant-numeric:tabular-nums}
+.ev b{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:4px}
+.ev-0{background:color-mix(in srgb,#5E7CE2 16%,var(--bg))}
+.ev-1{background:color-mix(in srgb,#E08A3C 18%,var(--bg))}
+.ev-2{background:color-mix(in srgb,#9A6AE0 16%,var(--bg))}
+.ev-busy{background:repeating-linear-gradient(135deg,var(--fill) 0 5px,var(--fill-2) 5px 10px)}
+.ev-busy b{color:var(--label-2)}
+.ev-busy svg{width:12px;height:12px;flex:none}
+.see-arrow{width:26px;height:26px;border-radius:50%;background:var(--bg);display:grid;place-items:center;color:var(--label-2)}
+.see-arrow svg{width:12px;height:12px}
+.see-cap{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--green);margin-top:-2px}
+.see-cap svg{flex:none}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--card);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:4px}
+.tile-ico{width:32px;height:32px;border-radius:10px;background:var(--tint);color:var(--on-tint);display:grid;place-items:center;margin-bottom:6px}
+.tile-ico svg{width:17px;height:17px}
+.tile b{font-size:15px;font-weight:600;line-height:20px}
+.tile span:last-child{font-size:13px;line-height:18px;color:var(--label-2)}
+html:lang(ja) .tile span:last-child{line-height:20px}
